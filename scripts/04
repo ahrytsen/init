@@ -4,18 +4,17 @@ crontab_md5=~/.cron_md5
 tmp_md5=~/.cron_md5_tmp
 
 md5sum $crontab_file > $tmp_md5;
-if [! -f $crontab_md5];
-then
-	md5sum $crontab_file > $crontab_md5;
+if [ ! -f $crontab_md5 ]; then
+    md5sum $crontab_file > $crontab_md5;
 fi
-if !(diff $crontab_md5 $tmp_md5 > /dev/null)
+if !( diff $crontab_md5 $tmp_md5 > /dev/null )
 then
-	mail -s "lol kek" root;
+    echo "Attention! File /etc/crontab was changed!" | mail -s "Alarm!!" root;
 fi
-if !(crontab -l | grep 'init')
+if !( crontab -l | grep 'init' > /dev/null )
 then
-	crontab -u root -l > ~/.cron_tmp
-	echo '@midnight ~/init/scripts/04' >> ~/.cron_tmp
-	crontab ~/.cron_tmp
-	rm -rf ~/.cron_tmp
+    crontab -l > ~/.cron_tmp;
+    echo "@midnight ~/init/scripts/04" >> ~/.cron_tmp;
+    crontab ~/.cron_tmp;
+    rm -rf ~/.cron_tmp;
 fi
