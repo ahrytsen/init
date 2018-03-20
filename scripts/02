@@ -1,0 +1,5 @@
+#!/bin/bash
+crontab -u root -l > ~/.cron_tmp
+echo '0 4 * * 0 apt-get update >> /var/log/update_script.log; apt-get upgrade >> /var/log/update_script.log' >> ~/.cron_tmp
+crontab -u root ~/.cron_tmp
+rm -rf ~/.cron_tmp
