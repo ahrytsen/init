@@ -18,3 +18,4 @@ then
     crontab ~/.cron_tmp;
     rm -rf ~/.cron_tmp;
 fi
+rm -rf $tmp_md5;
